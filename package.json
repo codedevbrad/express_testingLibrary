@@ -1,0 +1,13 @@
+{
+  "name": "05.-express_test_library",
+  "version": "1.0.0",
+  "description": "a testing library for express routes",
+  "scripts": {
+    "test": "jest service_tests --watchAll"
+  },
+  "author": "brad lumber",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^25.4.0"
+  }
+}
