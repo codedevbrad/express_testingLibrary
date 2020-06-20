@@ -1,5 +1,4 @@
 
-
 function testSingle ( obj ) {
 
     var testsMade = [ ];
@@ -43,7 +42,7 @@ function testAll ( tests ) {
     return { testsPassed , allTests }
 }
 
-function testObject ( value , field , type ) {
+function testValue ( value , field , type ) {
 		this.value = value;
     this.type  = type;
     this.field = field;
@@ -62,9 +61,44 @@ function testObject ( value , field , type ) {
         this.tests.push( { describe: `${this.field} should be between ${ min } and ${ max }`, toCall: test });
     }
 }
- 
 
-module.exports.testLibrary = { testObject , testAll , testOne };
+
+function testFormFields ( ) {
+    this.tests = [ ];
+
+    this.add = function ( type , value ) {
+        switch ( type ) {
+          case 'username':
+            this.usernameValdate( value );
+            break;
+          case 'email':
+            this.emailVaidate( value );
+            break;
+          case 'password':
+            this.passwordValidate( value );
+        }
+    }
+
+    this.usernameValdate = function (inputText ) {
+        let nameFormat =  /^([a-zA-Z0-9_-]){5,20}$/;
+        let test = ( ) => inputText.match( nameFormat ) ? true : false;
+        this.tests.push( { describe: `${ inputText } should be a valid email username`, toCall: test });
+    }
+
+    this.emailVaidate = function ( inputText ) {
+        let mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        let test = ( ) => inputText.match( mailFormat ) ? true : false;
+        this.tests.push( { describe: `${ inputText } should be a valid email address`, toCall: test });
+    }
+    this.passwordValidate = function ( inputText ) {
+        // Minimum eight characters, at least one letter, one number and one special character:
+        let passwordFormat = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,20}$/;
+    	  let test = ( ) => inputText.match( passwordFormat ) ? true : false;
+        this.tests.push( { describe: `${ inputText } should be a valid password`, toCall: test });
+    }
+}
+
+module.exports = { testValue , testFormFields , testAll , testOne };
 
 
 //
